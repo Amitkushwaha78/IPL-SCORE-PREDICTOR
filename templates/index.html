@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>IPL Score Predictor</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Overlay -->
+    <div class="overlay"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Heading -->
+        <h1>
+            🏏 IPL <span>Score Predictor</span>
+        </h1>
+
+        <div class="line"></div>
+
+        <p class="subtitle">
+            Enter live match details to predict the final score
+        </p>
+
+        <!-- Form -->
+        <form action="/predict" method="POST">
+
+            <!-- Batting Team -->
+            <div class="input-group">
+
+                <label>Batting Team</label>
+
+                <select name="batting_team" required>
+
+                    {% for team in teams %}
+
+                    <option value="{{team}}">
+                        {{team}}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Bowling Team -->
+            <div class="input-group">
+
+                <label>Bowling Team</label>
+
+                <select name="bowling_team" required>
+
+                    {% for team in teams %}
+
+                    <option value="{{team}}">
+                        {{team}}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Current Score -->
+            <div class="input-group">
+
+                <label>Current Score</label>
+
+                <div class="input-box">
+
+                    <input type="number"
+                           name="current_score"
+                           placeholder="Enter current score"
+                           required>
+
+                    <i class="fa-solid fa-calculator"></i>
+
+                </div>
+
+            </div>
+
+            <!-- Wickets -->
+            <div class="input-group">
+
+                <label>Wickets Left</label>
+
+                <div class="input-box">
+
+                    <input type="number"
+                           name="wickets_left"
+                           min="0"
+                           max="10"
+                           placeholder="Enter wickets left (0-10)"
+                           required>
+
+                    <i class="fa-solid fa-bars-staggered"></i>
+
+                </div>
+
+            </div>
+
+            <!-- Overs -->
+            <div class="input-group">
+
+                <label>Overs Completed</label>
+
+                <div class="input-box">
+
+                    <input type="number"
+                           step="0.1"
+                           min="0.1"
+                           max="20"
+                           name="overs"
+                           placeholder="Enter overs completed (0.1 - 20)"
+                           required>
+
+                    <i class="fa-regular fa-clock"></i>
+
+                </div>
+
+            </div>
+
+            <!-- Button -->
+            <button type="submit">
+
+                <i class="fa-solid fa-trophy"></i>
+
+                Predict Final Score
+
+            </button>
+
+        </form>
+
+        <!-- Result -->
+        {% if prediction %}
+
+        <div class="result-box">
+
+            <h2>
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Predicted Final Score
+
+            </h2>
+
+            <div class="score">
+
+                {{prediction}}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
